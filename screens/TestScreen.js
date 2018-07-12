@@ -13,6 +13,7 @@ import {
 import { TestComponent } from "./../components/AppComponents";
 import * as firebase from "firebase";
 import { connect } from "react-redux";
+import globalStyles from "../styles";
 
 import { setDisplayName, watchUserData } from "./../redux/app-redux";
 
@@ -65,14 +66,14 @@ class TestScreen extends React.Component {
         <Text>{this.props.displayName}</Text>
         <TextInput
           value={this.state.displayName}
-          style={{ borderWidth: 1, width: 200, height: 40 }}
+          style={globalStyles.textInput}
           onChangeText={text => {
             this.setState({ displayName: text });
           }}
         />
         <Button title="Set Name" onPress={this.onSetNamePress} />
 
-        <Text>{this.props.userDatagit.displayName}</Text>
+        <Text>{this.props.userData.displayName}</Text>
       </View>
     );
   }
