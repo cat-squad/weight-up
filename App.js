@@ -7,6 +7,10 @@ import MainTabNavigator from "./navigation/MainTabNavigator";
 import ApiKeys from "./constants/ApiKeys";
 import * as firebase from "firebase";
 
+// redux
+import { Provider } from "react-redux";
+import { store } from "./redux/app-redux";
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -43,17 +47,19 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-          {Platform.OS === "android" && (
-            <View style={styles.statusBarUnderlay} />
-          )}
-          {this.state.isAuthenticated ? (
-            <MainTabNavigator />
-          ) : (
-            <RootNavigation />
-          )}
-        </View>
+        <Provider store={store}>
+          <View style={styles.container}>
+            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+            {Platform.OS === "android" && (
+              <View style={styles.statusBarUnderlay} />
+            )}
+            {this.state.isAuthenticated ? (
+              <MainTabNavigator />
+            ) : (
+              <RootNavigation />
+            )}
+          </View>
+        </Provider>
       );
     }
   }
