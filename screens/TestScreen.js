@@ -61,7 +61,7 @@ class TestScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ paddingTop: 20 }}>
+      <View style={{ paddingTop: 80 }}>
         <Button title="Sign Out" onPress={this.onSignoutPress} />
         <Text>{this.props.displayName}</Text>
         <TextInput

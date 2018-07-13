@@ -19,7 +19,8 @@ export default class App extends React.Component {
       isLoadingComplete: false,
       isAuthenticationReady: false,
       isAuthenticated: false,
-      user: { ...defaultUserShape }
+      user: { ...defaultUserShape },
+      uid: null
     };
 
     // Initialize firebase...
@@ -33,7 +34,7 @@ export default class App extends React.Component {
   onAuthStateChanged = user => {
     this.setState({ isAuthenticationReady: true });
     this.setState({ isAuthenticated: !!user }); // if user is null, they are not authenticated
-    this.setState({ uid: user.uid });
+    user && this.setState({ uid: user.uid });
     this.retrieveUserData();
   };
 
