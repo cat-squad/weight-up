@@ -10,6 +10,7 @@ import * as firebase from "firebase";
 // redux
 import { Provider } from "react-redux";
 import { store } from "./redux/app-redux";
+import { defaultUserShape } from "./data/data";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +18,8 @@ export default class App extends React.Component {
     this.state = {
       isLoadingComplete: false,
       isAuthenticationReady: false,
-      isAuthenticated: false
+      isAuthenticated: false,
+      user: { ...defaultUserShape }
     };
 
     // Initialize firebase...
@@ -31,6 +33,31 @@ export default class App extends React.Component {
   onAuthStateChanged = user => {
     this.setState({ isAuthenticationReady: true });
     this.setState({ isAuthenticated: !!user }); // if user is null, they are not authenticated
+    this.setState({ uid: user.uid });
+    this.retrieveUserData();
+  };
+
+  retrieveUserData = () => {
+    console.log(this.state);
+    console.log("NEW STATE IS --> ");
+    const self = this;
+    firebase
+      .database()
+      .ref("users/" + this.state.user.uid)
+      .once("value", function(snap) {
+        const userSnapshot = snap.val() && snap.val().user;
+        const mergedUser = {
+          ...defaultUserShape,
+          ...userSnapshot
+        };
+        if (userSnapshot) {
+          self.setState({
+            character: mergedUser
+          });
+        }
+      });
+
+    console.log(this.state);
   };
 
   render() {
