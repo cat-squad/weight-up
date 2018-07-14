@@ -49,6 +49,8 @@ class TestScreen extends React.Component {
     };
 
     this.props.watchUserData();
+
+    console.log(this.state);
   }
 
   onSignoutPress = () => {

@@ -34,13 +34,12 @@ export default class App extends React.Component {
   onAuthStateChanged = user => {
     this.setState({ isAuthenticationReady: true });
     this.setState({ isAuthenticated: !!user }); // if user is null, they are not authenticated
-    user && this.setState({ uid: user.uid });
+    user ? this.setState({ uid: user.uid }) : this.setState({ uid: null }); //if user is valid, set uid in the state to that user's uid
     this.retrieveUserData();
+    console.log(this.state);
   };
 
   retrieveUserData = () => {
-    console.log(this.state);
-    console.log("NEW STATE IS --> ");
     const self = this;
     firebase
       .database()
@@ -53,12 +52,11 @@ export default class App extends React.Component {
         };
         if (userSnapshot) {
           self.setState({
-            character: mergedUser
+            user: mergedUser
           });
+          console.log("merged user is", this.state.user);
         }
       });
-
-    console.log(this.state);
   };
 
   render() {

@@ -26,8 +26,6 @@ export default class LoginScreen extends React.Component {
   };
 
   onCreateAccountPress = () => {
-    // this.props.navigation.navigate("Signup");
-
     const navActions = NavigationActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: "Signup" })]
